@@ -1,0 +1,1320 @@
+/* =========================
+   GLOBAL
+========================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    color: #1f2937;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+section {
+    padding: 50px 0;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.with-sidebar {
+    min-height: 100vh;
+}
+
+.main-content {
+    padding: 90px 30px 30px;
+    min-height: 100vh;
+    background: white;
+    border-radius: 16px;
+}
+
+.with-sidebar .main-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.custom-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    background: linear-gradient(90deg, #0f172a, #1e293b);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+}
+
+.navbar-brand img {
+    border-radius: 6px;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 64px);
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 20px 15px;
+    z-index: 1000;
+}
+
+.sidebar-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 12px;
+}
+
+.sidebar-link {
+    display: flex;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #1f2937;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.sidebar-link:hover {
+    background: #e2e8f0;
+    transform: translateX(3px);
+}
+
+.sidebar-link.active {
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    width: 100%;
+    margin: 0;
+}
+
+.with-sidebar footer {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+}
+
+.footer-link {
+    color: rgba(255,255,255,0.75);
+    transition: 0.2s ease;
+}
+
+.footer-link:hover {
+    color: #fff;
+    transform: translateX(3px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero-section {
+    position: relative;
+    min-height: 55vh;
+    background: url("/static/images/hero.jpg") center/cover no-repeat;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+}
+
+/* =========================
+   SEARCH COMPONENTS
+========================= */
+
+.search-wrapper,
+.hero-search {
+    display: flex;
+    justify-content: center;
+}
+
+.search-box,
+.hero-search .search-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.hero-search .search-box {
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.search-input,
+.hero-search .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 14px 18px;
+    font-size: 14px;
+    background: transparent;
+}
+
+.search-btn,
+.hero-search .search-btn {
+    border: none;
+    background: #667eea;
+    color: white;
+    padding: 0 20px;
+    height: 44px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.search-btn:hover,
+.hero-search .search-btn:hover {
+    background: #5a6fd8;
+}
+
+/* Dashboard Search */
+
+.dashboard-search {
+    margin-top: 10px;
+}
+
+.dashboard-search-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border-radius: 999px;
+    padding: 8px;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    padding: 8px 14px;
+    border-radius: 30px;
+}
+
+.search-field:hover {
+    background: #f9fafb;
+}
+
+.search-field div {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-field label {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.search-field input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+}
+
+.divider {
+    width: 1px;
+    height: 32px;
+    background: #e5e7eb;
+}
+
+
+
+/* =========================
+   NEXT TRIP CARD
+========================= */
+
+.next-trip-card {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    border-radius: 28px;
+
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255,255,255,0.35);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+
+    text-align: center;
+
+    transition: all 0.3s ease;
+}
+
+.next-trip-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 16px 40px rgba(0,0,0,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.next-trip-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.next-trip-destination {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 0.6rem;
+}
+
+.next-trip-dates {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 1.4rem;
+}
+
+.next-trip-card .btn {
+    border-radius: 999px;
+    padding: 0.75rem 1.6rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.next-trip-card .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* =========================
+   SECTION HEADINGS
+========================= */
+
+.section-title {
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 40px;
+}
+
+.section-heading {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+/* =========================
+   DESTINATIONS
+========================= */
+
+.destination-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.3s;
+    min-width: 280px;
+    width: 280px;
+    height: 260px;
+    flex-shrink: 0;
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.destination-card:hover {
+    transform: translateY(-6px);
+}
+
+.destination-card:hover img {
+    transform: scale(1.08);
+}
+
+.destination-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.45), transparent);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px;
+}
+
+.destination-link {
+    display: block;
+    color: inherit;
+}
+
+.destinations-scroll,
+.destinations-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 40px;
+    scrollbar-width: none;
+}
+
+.destinations-scroll::-webkit-scrollbar,
+.destinations-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-wrapper {
+    position: relative;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-btn.left {
+    left: 0;
+}
+
+.carousel-btn.right {
+    right: 0;
+}
+
+/* =========================
+   TRIP CARDS
+========================= */
+
+.trip-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.25s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.trip-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.trip-image-wrapper {
+    height: 200px;
+    overflow: hidden;
+}
+
+.trip-image,
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trip-body {
+    padding: 14px;
+}
+
+.trip-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.trip-location {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.trip-dates {
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+
+/* ==========================
+   REVIEWS 
+========================== */
+#reviews {
+  max-width: 900px; 
+}
+
+#reviews .card {
+  padding: 1rem 1.2rem !important;
+  transition: box-shadow 0.2s ease;
+}
+
+#reviews .card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+#reviews strong,
+.review-user-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+#reviews .text-warning {
+  font-size: 1rem;
+  letter-spacing: -1px;
+}
+
+#reviews p {
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+  color: #444;
+}
+
+#reviews small,
+.review-date {
+  font-size: 0.72rem;
+  color: #888;
+}
+
+#reviews .btn {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+#reviews .btn-outline-warning {
+  border-color: #ffc107;
+  color: #b88900;
+}
+
+#reviews .btn-outline-danger {
+  border-color: #dc3545;
+  color: #b02a37;
+}
+
+#reviews .row {
+  gap: 0.5rem;
+}
+
+#reviews textarea {
+  font-size: 0.9rem;
+}
+
+#reviews select,
+#reviews select.form-select {
+  font-size: 0.9rem;
+}
+
+#reviews .section-heading {
+  font-size: 1.1rem;
+}
+
+/* ==========================
+   REVIEW USER HEADER / AVATAR
+========================== */
+
+.review-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+.review-avatar-placeholder {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+.review-item .d-flex.align-items-center.gap-3 {
+    gap: 12px;
+}
+
+.review-actions {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#reviews .card:hover .review-actions {
+    opacity: 1;
+}
+
+.review-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.review-action-btn:hover {
+    transform: scale(1.08);
+}
+
+
+/* ==========================
+   Ratings Dropdown Style (Reviews only)
+========================== */
+#reviews select.form-select {
+  color: black; 
+}
+
+#reviews select.form-select:valid {
+  color: #ffb400; 
+}
+
+#reviews select.form-select option {
+  color: #ffb400;
+}
+
+#reviews select.form-select option:first-child {
+  color: black;
+}
+
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+
+    border-radius: 24px;
+    padding: 40px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 35px;
+}
+
+.profile-avatar {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.profile-avatar-placeholder {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #667eea, #764ba2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.profile-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #111827;
+}
+
+.profile-subtitle {
+    color: #6b7280;
+    margin: 0;
+}
+
+.profile-section {
+    margin-bottom: 35px;
+}
+
+.profile-bio {
+    margin-top: 10px;
+    color: #666;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.section-heading {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.profile-form input,
+.profile-form textarea,
+.profile-form select {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    padding: 14px 16px;
+
+    background: #f9fafb;
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus,
+.profile-form select:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+
+    box-shadow: 0 0 0 4px rgba(102,126,234,0.12);
+}
+
+.profile-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.save-profile-btn {
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-weight: 600;
+
+    box-shadow: 0 10px 25px rgba(102,126,234,0.25);
+}
+
+.trip-author {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.trip-author .badge {
+    font-size: 0.75rem;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: #667eea;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #5a6fd8;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features-section {
+    padding: 50px 0;
+    background: #f8fafc;
+}
+
+.feature-card {
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f7;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+/* Icon colors */
+.feature-card:nth-child(1) .feature-icon {
+    color: #3b82f6;
+}
+
+.feature-card:nth-child(2) .feature-icon {
+    color: #10b981;
+}
+
+.feature-card:nth-child(3) .feature-icon {
+    color: #f59e0b;
+}
+
+/* =========================
+   CTA SECTION
+========================= */
+
+.cta-section {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 80px 20px;
+    border-radius: 20px;
+    margin: 60px auto;
+    max-width: 1000px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.cta-section h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.cta-section p {
+    opacity: 0.9;
+}
+
+.cta-section .btn {
+    background: white;
+    color: #667eea;
+    border: none;
+    padding: 12px 28px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.cta-section .btn:hover {
+    background: #f1f5f9;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+/* =========================
+   WEATHER
+========================= */
+
+.weather-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #4facfe, #3b82f6);
+    color: white;
+    padding: 14px 16px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.weather-temp {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.weather-desc {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* ==========================
+   COUNTRY CARD
+========================== */
+.trip-overview-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trip-overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.trip-overview-hero {
+    height: 100px;     
+    width: 160px;     
+    margin: 0 auto;    
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.trip-overview-hero img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.trip-overview-hero .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    color: white;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    font-weight: 600;
+    text-align: center;
+}
+
+.country-name {
+    font-size: 0.9rem;
+}
+
+.country-region {
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+
+.country-details {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* space between rows */
+}
+
+.country-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+.detail-row span {
+    color: #6b7280;
+}
+
+.detail-row strong {
+    font-weight: 600;
+    color: #111827;
+}
+
+
+/* =========================
+   MAP
+========================= */
+
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+}
+
+/* =========================
+   OVERLAY
+========================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.card-body .form-label {
+    display: block;
+    margin-bottom: 6px; 
+    font-weight: 600;  
+}
+
+.card-body input,
+    .card-body textarea,
+    .card-body select {
+        width: 100%;
+    }
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 992px) {
+
+    .main-content {
+        padding: 80px 20px 20px;
+    }
+
+    .with-sidebar .main-content,
+    .with-sidebar footer {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .trip-hero-split {
+        grid-template-columns: 1fr;
+    }
+
+    .trip-hero-image,
+    .trip-hero-info {
+        height: auto;
+    }
+
+    .dashboard-search-box {
+        flex-wrap: wrap;
+        border-radius: 20px;
+    }
+
+    .search-field {
+        flex: 1 1 45%;
+    }
+
+    .divider {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    section {
+        padding: 30px 0;
+    }
+
+    .custom-navbar {
+        padding: 0 12px;
+    }
+
+    body.with-sidebar .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        padding: 80px 15px 20px;
+        border-radius: 0;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-search .search-box,
+    .dashboard-search-box,
+    .search-bar-wrapper {
+        flex-direction: column;
+        border-radius: 20px;
+        width: 100%;
+    }
+
+    .hero-search .search-btn,
+    .search-btn {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    .destination-card {
+        min-width: 220px;
+        height: 220px;
+    }
+
+    .trip-image-wrapper {
+        height: 180px;
+    }
+
+    .profile-card {
+        padding: 24px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .form-grid {
+    grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    
+    .row.mb-5 {
+        display: flex;
+        flex-direction: column;
+        gap: 30px; 
+    }
+
+    .col-md-6 .section-heading.mb-3 {
+        margin-top: 30px; 
+        margin-bottom: 12px; 
+        text-align: center;
+    }
+
+    .trip-overview-card {
+        margin-top: 0; 
+    }
+
+    .weather-card {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .trip-overview-hero {
+        width: 95%;
+        height: 100px; 
+        margin: 0 auto 12px;
+    }
+
+
+    .section-heading.mb-3 {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+    
+
+    #map {
+        height: 350px;
+    }
+
+
+    .review-avatar,
+    .review-avatar-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .review-item .d-flex.align-items-center.gap-3 {
+        gap: 10px;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+
+    .hero-title {
+        font-size: 1.6rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .trip-image-wrapper {
+        height: 160px;
+    }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none !important;
+    }
+}
+
+
+
+
+
+
+
+
+    

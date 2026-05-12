@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- =========================
+        HEADER
+    ========================= -->
+    <div class="p-4 mb-4 rounded"
+         style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+        <h2 class="mb-1">Edit Itinerary Item</h2>
+        <small>Update your activity details</small>
+    </div>
+
+    <!-- =========================
+        FORM CARD
+    ========================= -->
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <!-- TITLE -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Title</label>
+                        {{ form.title }}
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Location</label>
+                        {{ form.location }}
+                    </div>
+
+                    <!-- DATE -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Date</label>
+                        {{ form.date }}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div id="trip-duration" class="text-muted small">
+                            Select dates to see duration
+                        </div>
+                    </div>
+
+                    <!-- TIME -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Time</label>
+                        {{ form.time }}
+                    </div>
+
+                    <!-- NOTES -->
+                    <div class="col-12 mb-3">
+                        <label class="form-label fw-semibold">Notes</label>
+                        {{ form.notes }}
+                    </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{% url 'trip_detail' item.trip.id %}"
+                       class="btn btn-outline-secondary px-4">
+                        Cancel
+                    </a>
+
+                    <button class="btn px-4"
+                            style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

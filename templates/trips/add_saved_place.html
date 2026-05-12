@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="p-4 mb-4 rounded shadow-sm" 
+         style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+        <h2 class="mb-1 fw-bold">Add Saved Place</h2>
+        <small>Save a new place you want to remember</small>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="card shadow border-0 mb-5">
+        <div class="card-body p-4">
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row g-3">
+
+                    <!-- PLACE NAME -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold">Place Name</label>
+                        {{ form.name }}
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold">Location</label>
+                        {{ form.location }}
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Description</label>
+                        {{ form.description }}
+                    </div>
+
+                    <!-- IMAGE -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Image</label>
+                        {% if form.instance.image %}
+                        <div class="mb-2">
+                            <img src="{{ form.instance.image.url }}" 
+                                 class="img-fluid rounded" 
+                                 style="max-width: 200px;">
+                        </div>
+                        {% endif %}
+                        {{ form.image }}
+                    </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                    <a href="{% url 'dashboard' %}" 
+                       class="btn btn-outline-secondary">
+                        Back
+                    </a>
+
+                    <button type="submit" 
+                            class="btn"
+                            style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">
+                        Save Place
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

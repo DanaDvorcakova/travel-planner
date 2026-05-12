@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <!-- HEADER -->
+        <div class="profile-header">
+
+            <div class="profile-avatar-wrapper">
+
+                {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" class="profile-avatar">
+                {% else %}
+                <div class="profile-avatar-placeholder">
+                    {{ user.username|first|upper }}
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <h2 class="profile-title">
+                    {{ user.username }}
+                </h2>
+
+                <p class="profile-subtitle">
+                    Manage your travel profile
+                </p>
+
+                {% if user.profile.bio %}
+                <p class="profile-bio">
+                    {{ user.profile.bio }}
+                </p>
+                {% endif %}
+
+                {% if user.profile.travel_style %}
+                <span class="badge rounded-pill bg-primary">
+                    {{ user.profile.travel_style }}
+                </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- FORM -->
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+
+            {% csrf_token %}
+
+            <div class="profile-section">
+
+                <h5 class="section-heading">
+                    Account Information
+                </h5>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        {{ user_form.username }}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        {{ user_form.email }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile-section">
+
+                <h5 class="section-heading">
+                    Travel Profile
+                </h5>
+
+                <div class="form-group mb-3">
+                    <label>Avatar</label>
+                    {{ profile_form.avatar }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>Bio</label>
+                    {{ profile_form.bio }}
+                </div>
+
+                <div class="form-group">
+                    <label>Travel Style</label>
+                    {{ profile_form.travel_style }}
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary save-profile-btn">
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

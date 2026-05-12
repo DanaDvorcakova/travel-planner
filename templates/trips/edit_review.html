@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 p-4">
+        <h5 class="mb-3">Edit Review</h5>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                {{ form.comment.label_tag }}
+                {{ form.comment }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.rating.label_tag }}
+                {{ form.rating }}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">
+                Update Review
+            </button>
+
+            <a href="{% url 'trip_detail' trip.id %}" 
+               class="btn btn-outline-secondary btn-sm">
+               Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

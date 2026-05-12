@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- =========================
+      HEADER (PREMIUM)
+========================= -->
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+
+        <div>
+            <h2 class="section-title mb-1">Your dashboard</h2>
+            <p class="section-subtitle mb-0">
+                Manage and plan your trips
+            </p>
+        </div>
+
+        <a href="{% url 'add_trip' %}" class="btn btn-primary px-4">
+            + Add Trip
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+      NEXT TRIP
+========================= -->
+    {% if next_trip %}
+    <div class="next-trip-card">
+
+    <h3>{{ next_trip.title }}</h3>
+
+    <div class="next-trip-destination">
+        🌍 {{ next_trip.destination }}
+    </div>
+
+    <div class="next-trip-dates">
+        📅 {{ next_trip.start_date }} → {{ next_trip.end_date }}
+    
+
+    <div class="mt-2">
+                {% if days_left == 0 %}
+                <span class="badge bg-warning text-dark">Today 🎉</span>
+                {% elif days_left == 1 %}
+                <span class="badge bg-warning text-dark">Tomorrow ✈️</span>
+                {% else %}
+                <span class="badge bg-primary">{{ days_left }} days left</span>
+                {% endif %}
+            </div>
+        </div>
+
+
+    <a href="{% url 'trip_detail' next_trip.id %}"
+       class="btn btn-primary">
+        View Trip
+    </a>
+
+</div>
+    {% endif %}
+
+
+    <!-- =========================
+     STATS (CLEAN)
+========================= -->
+    <div class="row mb-5 justify-content-center">
+
+        <!-- Trips Stat -->
+        <div class="col-md-3 mb-3">
+            <div class="stat-card shadow-sm">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ total_trips }}</div>
+                    <div class="stat-label">Trips</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Published Trips Stat -->
+        <div class="col-md-3 mb-3">
+            <div class="stat-card shadow-sm">
+                <div class="stat-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ published_trips }}</div>
+                    <div class="stat-label">Published</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Trips Stat -->
+        <div class="col-md-3 mb-3">
+            <div class="stat-card shadow-sm">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ upcoming_trips }}</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+     SEARCH
+========================= -->
+    <form method="GET" class="dashboard-search mb-5">
+
+        <div class="dashboard-search-box">
+
+            <div class="search-field">
+                <div>
+                    <label>Search</label>
+                    <input type="text" name="q" placeholder="Trip Name" value="{{ request.GET.q }}">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-field">
+                <div>
+                    <label>Destination</label>
+                    <input type="text" name="destination" placeholder="Anywhere" value="{{ request.GET.destination }}">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-field">
+                <div>
+                    <label>Date</label>
+                    <input type="date" name="start_date" value="{{ request.GET.start_date }}">
+                </div>
+            </div>
+
+            <button type="submit" class="search-btn">
+                🔍
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <!-- FILTER PILL -->
+    {% comment %}
+Only show "Showing filtered trips" if actual filters/search applied, ignoring pagination.
+{% endcomment %}
+{% with request.GET.dict as get_params %}
+    {% if get_params.q or get_params.destination or get_params.start_date %}
+    <div class="filter-bar text-center mb-4">
+        <div class="filter-pill d-inline-flex align-items-center gap-2">
+            <span class="filter-label">
+                Showing filtered trips
+            </span>
+
+            <a href="{% url 'dashboard' %}" class="filter-clear">
+                ✕
+            </a>
+        </div>
+    </div>
+    {% endif %}
+{% endwith %}
+
+
+    <!-- =========================
+     TRIPS GRID
+========================= -->
+    <h4 class="mb-4">Your trips</h4>
+
+    <div class="row g-4">
+
+        {% for trip in page_obj %}
+        <div class="col-md-4">
+
+            <div class="trip-card">
+
+                {% if trip.image %}
+                <div class="trip-image-wrapper">
+                    <a href="{% url 'trip_detail' trip.id %}">
+                        <img src="{{ trip.image.url }}" class="trip-image">
+                    </a>
+
+                    <span class="trip-badge">
+                        {% if trip.is_published %}
+                        🌍 Public
+                        {% else %}
+                        🔒 Private
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+
+                <div class="trip-body">
+
+                    <h5 class="trip-title">
+                        <a href="{% url 'trip_detail' trip.id %}">
+                            {{ trip.title }}
+                        </a>
+                    </h5>
+
+                    <div class="trip-location">
+                        🌍 {{ trip.destination }}
+                    </div>
+
+                    <div class="trip-dates">
+                        📅 {{ trip.start_date }} → {{ trip.end_date }}
+                    </div>
+
+                    <div class="trip-footer">
+
+                        
+
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'edit_trip' trip.id %}" class="trip-link">
+                                Edit
+                            </a>
+                            <a href="{% url 'delete_trip' trip.id %}" class="trip-link text-danger">
+                                Delete
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+        <div class="text-center text-muted mt-5">
+
+            {% if request.GET %}
+            <p>No trips found.</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                Clear filters
+            </a>
+            {% else %}
+            <p>No trips yet — start your first adventure ✈️</p>
+            <a href="{% url 'add_trip' %}" class="btn btn-primary btn-sm mt-2">
+                + Create trip
+            </a>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =========================
+     PAGINATION (IMPORTANT)
+========================= -->
+    {% include "trips/includes/pagination.html" %}
+
+</div>
+
+{% endblock %}

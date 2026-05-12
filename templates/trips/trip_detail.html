@@ -1,0 +1,634 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- =========================
+         BREADCRUMB
+    ========================= -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <div class="p-2 px-3 bg-light rounded d-flex align-items-center justify-content-between">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="text-decoration-none">🏠 Dashboard</a>
+                    {% else %}
+                    <a href="{% url 'home' %}" class="text-decoration-none">🏠 Home</a>
+                    {% endif %}
+                </li>
+
+                <li class="breadcrumb-item active text-truncate" style="max-width: 250px;">
+                    {{ trip.title }}
+                </li>
+            </ol>
+
+            <a href="javascript:history.back()" class="btn btn-sm btn-outline-secondary">
+                Back
+            </a>
+        </div>
+    </nav>
+
+    <!-- =========================
+         HERO SECTION
+    ========================= -->
+    <div class="trip-header mb-4">
+
+        <div>
+            <h2 class="mb-1">{{ trip.title }}</h2>
+
+            <p class="mb-0">
+                📍 {{ trip.destination }}
+                |
+                {{ trip.start_date }}
+                →
+                {{ trip.end_date }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- HERO IMAGE -->
+    {% if trip.image %}
+    <div class="trip-hero-image mb-4">
+        <img src="{{ trip.image.url }}" alt="trip image" class="w-100 rounded">
+    </div>
+    {% endif %}
+
+    <!-- =========================
+         ACTION BUTTONS ROW
+    ========================= -->
+    <div class="card border-0 shadow-sm mb-5">
+
+        <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+            <!-- LEFT: Owner actions ONLY -->
+            <div class="d-flex flex-wrap gap-2">
+
+                {% if user.is_authenticated and trip.user == user %}
+
+
+
+
+
+
+                <a href="{% url 'planner' trip.id %}" class="btn btn-outline-primary btn-sm">
+                    📅 Itinerary Planner
+                </a>
+
+                <a href="{% url 'add_item' trip.id %}" class="btn btn-primary btn-sm">
+                    + Add to Itinerary
+                </a>
+
+                <a href="{% url 'edit_trip' trip.id %}" class="btn btn-outline-warning btn-sm">
+                    Edit Trip
+                </a>
+
+
+
+                <!-- DELETE TRIP -->
+                <form method="post" action="{% url 'delete_trip' trip.id %}" class="d-inline"
+                    onsubmit="return confirm('Delete this trip?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        Delete Trip
+                    </button>
+                </form>
+
+                <form method="POST" action="{% url 'toggle_publish_trip' trip.id %}" class="d-inline">
+
+                    {% csrf_token %}
+
+                    {% if trip.is_published %}
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                        Unpublish Trip
+                    </button>
+                    {% else %}
+                    <button type="submit" class="btn btn-success btn-sm">
+                        Publish Trip
+                    </button>
+                    {% endif %}
+
+                </form>
+
+                {% endif %}
+
+            </div>
+
+            <!-- RIGHT: PUBLIC BUTTON -->
+            <div class="d-flex">
+                <a href="#reviews" class="btn btn-outline-primary btn-sm">
+                    ⭐ Jump to Reviews
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================
+         DESCRIPTION
+    ========================= -->
+    <div class="mb-5">
+
+        <h5 class="section-heading mb-3">
+            About this trip
+        </h5>
+
+        <div class="card border-0 shadow-sm p-3">
+
+            {% if trip.description %}
+            <p class="mb-0" style="line-height: 1.6;">
+                {{ trip.description }}
+            </p>
+
+            {% else %}
+            <p class="text-muted mb-0">
+                No description added yet.
+            </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         ITINERARY
+    ========================= -->
+    <div class="mb-5">
+
+        <h5 class="section-heading mb-3">
+            Itinerary
+        </h5>
+
+        {% if trip.itinerary.exists %}
+
+        <div class="d-flex justify-content-end mb-3 gap-2">
+
+            <button class="btn btn-sm btn-outline-primary" onclick="toggleAll(true)">
+                Show All
+            </button>
+
+            <button class="btn btn-sm btn-outline-secondary" onclick="toggleAll(false)">
+                Hide All
+            </button>
+
+        </div>
+
+        {% regroup trip.itinerary.all by date as itinerary_by_day %}
+
+        {% for day in itinerary_by_day %}
+
+        <div class="mb-3">
+
+            <div class="p-2 px-3 bg-light rounded d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse" data-bs-target="#day{{ forloop.counter0 }}" style="cursor:pointer;">
+
+                <div>
+                    <span class="badge bg-primary me-2">
+                        Day {{ forloop.counter }}
+                    </span>
+
+                    <span class="fw-semibold">
+                        {{ day.grouper }}
+                    </span>
+                </div>
+
+                <span class="toggle-text text-primary fw-bold">
+                    ▼
+                </span>
+
+            </div>
+
+            <div id="day{{ forloop.counter0 }}" class="collapse show mt-2">
+
+                <div class="timeline mt-3">
+
+                    {% for item in day.list %}
+
+                    <div class="timeline-item itinerary-item" data-lat="{{ item.latitude }}"
+                        data-lon="{{ item.longitude }}">
+
+                        <div class="fw-semibold">
+                            {{ item.title }}
+                        </div>
+
+                        <div class="text-muted small mt-1">
+                            📍 {{ item.location }}
+
+                            {% if item.time %}
+                            • ⏰ {{ item.time }}
+                            {% endif %}
+                        </div>
+
+                        {% if item.notes %}
+                        <div class="small text-muted fst-italic mt-1">
+                            📝 {{ item.notes }}
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="card p-3 text-muted">
+            No itinerary yet.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- =========================
+         WEATHER + COUNTRY
+    ========================= -->
+    <div class="row mb-5">
+
+        <!-- WEATHER -->
+        <div class="col-md-6 mb-4 d-flex">
+            <div class="w-100">
+
+                <h5 class="section-heading mb-3">
+                    Weather
+                </h5>
+
+                <div class="card shadow-sm border-0 p-3 h-100">
+
+                    {% if weather %}
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        {% if weather.icon %}
+                        <img src="https://openweathermap.org/img/wn/{{ weather.icon|slice:':2' }}d@2x.png"
+                            alt="Weather icon">
+                        {% endif %}
+
+                        <div>
+                            <div class="fs-4 fw-bold">
+                                {{ weather.temp }}°C
+                            </div>
+
+                            <div class="text-muted">
+                                {{ weather.description|capfirst }}
+                                in {{ weather.city }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% if forecast %}
+                    <div class="mt-3 d-flex gap-3 overflow-auto forecast-container">
+
+                        {% for day in forecast %}
+
+                        <div class="forecast-card text-center p-2 rounded">
+
+                            <div class="small text-muted mb-1">
+                                {{ day.day_label }}
+                            </div>
+
+                            {% if day.icon %}
+                            <img src="https://openweathermap.org/img/wn/{{ day.icon|slice:':2' }}d@2x.png"
+                                alt="Forecast icon" class="forecast-icon">
+                            {% endif %}
+
+                            <div class="fw-bold mt-1">
+                                {{ day.temp }}°
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="text-center py-4">
+
+                        <div class="fs-2 mb-2">
+                            🌤️
+                        </div>
+
+                        <h6 class="fw-bold mb-1">
+                            Forecast Not Available Yet
+                        </h6>
+
+                        <p class="text-muted mb-0 small">
+                            Forecast will appear closer to your trip dates
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% else %}
+
+                    <div class="text-center py-5">
+
+                        <div class="fs-1 mb-3">
+                            🌤️
+                        </div>
+
+                        <h6 class="fw-bold">
+                            This trip has already ended.
+                            Live weather forecasts are no longer available.
+                        </h6>
+
+                        <p class="text-muted mb-0">
+                            {{ weather_message }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- COUNTRY -->
+        {% if country_info %}
+        <div class="col-md-6 mb-4 d-flex">
+
+            <div class="w-100">
+
+                <h5 class="section-heading mb-3">
+                    Country Info
+                </h5>
+
+                <div class="trip-overview-card small-card h-100">
+
+                    <div class="trip-overview-hero small">
+
+                        {% if country_info.flag %}
+                        <img src="{{ country_info.flag }}" alt="flag">
+                        {% endif %}
+
+                        <div class="overlay">
+
+                            <div class="country-name">
+                                {{ country_info.name }}
+                            </div>
+
+                            <div class="country-region">
+                                🌍 {{ country_info.region }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="country-details">
+
+                        <div class="country-title">
+                            {{ country_info.name }}
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Capital</span>
+                            <strong>{{ country_info.capital }}</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Currency</span>
+                            <strong>{{ country_info.currency }}</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Language</span>
+                            <strong>{{ country_info.language }}</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- =========================
+         MAP
+    ========================= -->
+    <h5 class="section-heading">
+        Map
+    </h5>
+
+    <div class="mb-4 p-3 bg-light rounded d-flex align-items-center gap-3">
+
+        <span class="fw-semibold text-muted">
+            Map Filter:
+        </span>
+
+        <select id="dayFilter" class="form-select form-select-sm map-filter-dropdown w-auto">
+
+            <option value="all">
+                All days
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="card border-0 shadow-sm overflow-hidden">
+
+        <div id="map" data-lat="{{ map_lat }}" data-lon="{{ map_lon }}" data-places='{{ places_json|escape }}'>
+        </div>
+
+    </div>
+
+    <!-- =========================
+         REVIEWS
+    ========================= -->
+    {% if trip.is_published %}
+
+    <div id="reviews" class="mb-5 mt-5">
+
+        <h5 class="section-heading mb-3">
+
+            Reviews
+
+            {% if reviews %}
+            (Average:
+            <span class="text-warning">
+
+                {% for _ in full_stars_avg %}★{% endfor %}
+                {% for _ in empty_stars_avg %}☆{% endfor %}
+
+            </span>
+
+            - {{ average_rating }} out of 5)
+            {% endif %}
+
+        </h5>
+
+        {% if reviews %}
+
+        <div class="row g-3 mb-4">
+
+            {% for review in reviews %}
+
+            <div class="col-12 review-item {% if forloop.counter > 3 %}d-none extra-review{% endif %}">
+
+                <div class="card shadow-sm border-0 p-3 h-100">
+
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+
+                        <div class="d-flex align-items-center gap-3">
+
+                            {% if review.user.profile.avatar %}
+                            <img src="{{ review.user.profile.avatar.url }}" class="review-avatar">
+
+                            {% else %}
+                            <div class="review-avatar-placeholder">
+                                {{ review.user.username|first|upper }}
+                            </div>
+                            {% endif %}
+
+                            <div>
+
+                                <div class="fw-semibold">
+                                    {{ review.user.username }}
+                                </div>
+
+                                <small class="text-muted">
+                                    {{ review.created_at|date:"M d, Y" }}
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="text-warning">
+
+                                {% for _ in review.full_stars_range %}★{% endfor %}
+                                {% for _ in review.empty_stars_range %}☆{% endfor %}
+
+                            </div>
+
+                            {% if user == review.user %}
+
+                            <div class="review-actions">
+
+                                <a href="{% url 'edit_review' review.id %}" class="review-action-btn edit-btn">
+                                    ✏️
+                                </a>
+
+                                <!-- SECURE DELETE -->
+                                <form method="post" action="{% url 'delete_review' review.id %}" class="d-inline"
+                                    onsubmit="return confirm('Delete this review?');">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="review-action-btn delete-btn border-0 bg-transparent">
+                                        🗑
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <p class="mb-0" style="line-height:1.6;">
+                        {{ review.comment }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% if reviews.count > 3 %}
+
+        <div class="text-center mt-3 mb-4">
+
+            <button id="showMoreReviewsBtn" class="btn btn-outline-primary rounded-pill px-4">
+                Show More Reviews
+            </button>
+
+        </div>
+
+        {% endif %}
+
+        {% else %}
+
+        <div class="card p-3 text-muted">
+            No reviews yet.
+        </div>
+
+        {% endif %}
+
+        <!-- REVIEW FORM -->
+        {% if user.is_authenticated %}
+
+        <div class="card shadow-sm border-0 p-3">
+
+            <h6 class="mb-3">
+                Write a review
+            </h6>
+
+            <form method="post" action="{% url 'add_review' trip.id %}">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    {{ review_form.comment.label_tag }}
+                    {{ review_form.comment }}
+                </div>
+
+                <div class="mb-3 review-rating-dropdown">
+                    {{ review_form.rating.label_tag }}
+                    {{ review_form.rating }}
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-sm">
+                    Submit Review
+                </button>
+
+            </form>
+
+        </div>
+
+        {% else %}
+
+        <p class="text-muted">
+            <a href="{% url 'login' %}">
+                Log in
+            </a>
+            to leave a review.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
