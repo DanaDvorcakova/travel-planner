@@ -18,12 +18,14 @@ DATABASES = {
 }
 
 # SECURITY
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-dev-key")  
-DEBUG = os.getenv("DEBUG", "True") == "True"
-DEBUG = True
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "travel-planner-sege.onrender.com"
+]
 
 # APPLICATIONS
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,10 +79,11 @@ WSGI_APPLICATION = 'travel_planner.wsgi.application'
 
 
 # DATABASE
+import dj_database_url
+
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
     )
 }
 
@@ -108,9 +112,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles" 
 
 
 # MEDIA FILES (FOR IMAGES)
@@ -128,9 +132,8 @@ LOGOUT_REDIRECT_URL = 'home'
 #WEATHER_API_KEY = "cc7bbcc49a31f696e2c18147bff9d7a2"
 #OPENCAGE_API_KEY = "442ba9ce750b4fcca2eb1868a902274d"
 
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY", "dev-weather-key")
-OPENCAGE_API_KEY = os.getenv("OPENCAGE_API_KEY", "dev-opencage-key")
-
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+OPENCAGE_API_KEY = os.getenv("OPENCAGE_API_KEY")
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
