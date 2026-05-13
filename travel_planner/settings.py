@@ -5,7 +5,10 @@ Django settings for travel_planner project.
 from pathlib import Path
 import os
 import dj_database_url
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from decouple import config
 
 # BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -145,22 +148,20 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 
-#WEATHER_API_KEY = "cc7bbcc49a31f696e2c18147bff9d7a2"
-#OPENCAGE_API_KEY = "442ba9ce750b4fcca2eb1868a902274d"
-
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 OPENCAGE_API_KEY = os.getenv("OPENCAGE_API_KEY")
 
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER'] # Login email address, Stored as an environment varaible
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD'] # App Password set from gmail, Stored as an environment varaible
-
+# Cloudinary settings
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
-    'API_KEY': os.environ['CLOUDINARY_API_KEY'],
-    'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
