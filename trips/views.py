@@ -229,6 +229,9 @@ def add_trip(request):
             trip = form.save(commit=False)
             trip.user = request.user
             trip.save()
+
+            
+
             messages.success(request, "Trip created successfully.")
             return redirect('dashboard')
     else:
