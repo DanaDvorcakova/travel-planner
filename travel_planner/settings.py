@@ -36,7 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'trips',  # my app
+    'cloudinary',
+    'cloudinary_storage',
 ]
+
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+
+# Use Cloudinary for media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # MIDDLEWARE
@@ -118,8 +130,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 # MEDIA FILES (FOR IMAGES)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Local fallback
+if os.getenv("DJANGO_SETTINGS_MODULE") == "travel_planner.settings_dev":
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # DEFAULT PRIMARY KEY
