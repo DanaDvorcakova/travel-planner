@@ -26,7 +26,7 @@ function getCookie(name) {
 }
 
 // =========================
-// SHOW TOAST (Bootstrap 5)
+// SHOW TOAST 
 // =========================
 function showToast(message) {
     // Create toast container if it doesn't exist

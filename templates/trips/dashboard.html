@@ -221,9 +221,7 @@ Only show "Showing filtered trips" if actual filters/search applied, ignoring pa
                             <a href="{% url 'edit_trip' trip.id %}" class="trip-link">
                                 Edit
                             </a>
-                            <a href="{% url 'delete_trip' trip.id %}" class="trip-link text-danger">
-                                Delete
-                            </a>
+                            {% include "components/delete_modal.html" with object=trip delete_url=trip.get_delete_url modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete" %}
                         </div>
 
                     </div>
