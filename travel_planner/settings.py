@@ -5,21 +5,13 @@ Django settings for travel_planner project.
 from pathlib import Path
 import os
 import dj_database_url
+from decouple import config
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from decouple import config
 
 # BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# DATABASE
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
-    )
-}
 
 # SECURITY
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
@@ -39,22 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'trips',  # my app
+    'trips',  # your app
     'cloudinary',
     'cloudinary_storage',
 ]
-
-
-
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
 
 # MIDDLEWARE
 MIDDLEWARE = [
@@ -68,10 +48,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 # URL CONFIG
 ROOT_URLCONF = 'travel_planner.urls'
-
 
 # TEMPLATES
 TEMPLATES = [
@@ -90,37 +68,24 @@ TEMPLATES = [
     },
 ]
 
-
 # WSGI
 WSGI_APPLICATION = 'travel_planner.wsgi.application'
 
-
 # DATABASE
-import dj_database_url
-
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600
     )
 }
 
-
 # PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
 
 # INTERNATIONALIZATION
 LANGUAGE_CODE = 'en-us'
@@ -128,29 +93,54 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
+# STATIC FILES
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# STATICFILES STORAGE
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# MEDIA FILES (FOR IMAGES)
-# Local fallback
-#if os.getenv("DJANGO_SETTINGS_MODULE") == "travel_planner.settings_dev":
- #  MEDIA_URL = '/media/'
-  # MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA FILES & CLOUDINARY
 
+# Check if running on Render (you can set an env var RENDER=True on Render)
+IS_RENDER = os.getenv("RENDER", "False") == "True"
+
+if IS_RENDER:
+    # Use Cloudinary in production
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    }
+
+    MEDIA_URL = '/media/'  # Django requires this even with cloudinary storage
+else:
+    # Local development fallback
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # DEFAULT PRIMARY KEY
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# LOGIN
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-
+# WEATHER & LOCATION API KEYS
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 OPENCAGE_API_KEY = os.getenv("OPENCAGE_API_KEY")
 
+# EMAIL SETTINGS
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
@@ -158,10 +148,3 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
 EMAIL_HOST_USER = os.getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# Cloudinary settings
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-}

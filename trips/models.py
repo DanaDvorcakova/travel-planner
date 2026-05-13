@@ -4,6 +4,7 @@ from django.db.models import Avg
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
+from cloudinary.models import CloudinaryField
 
 # =========================
 # PROFILE
@@ -21,10 +22,8 @@ class Profile(models.Model):
         related_name='profile'
     )
 
-    avatar = models.ImageField(
-        upload_to='avatars/',
-        blank=True,
-        null=True
+    avatar = CloudinaryField(
+        'avatar', blank=True, null=True  # <-- changed from ImageField
     )
 
     bio = models.TextField(blank=True)
@@ -65,7 +64,7 @@ class Trip(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='trips/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -113,7 +112,7 @@ class SavedPlace(models.Model):
 
     description = models.TextField(blank=True)
 
-    image = image = models.ImageField(upload_to='places/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     
 
     rating = models.PositiveSmallIntegerField(
@@ -241,6 +240,9 @@ class Review(models.Model):
 
 
 
+# =========================
+# PLACE
+# =========================
 class Place(models.Model):
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='places/')
+    photo = CloudinaryField('photo', blank=True, null=True)
