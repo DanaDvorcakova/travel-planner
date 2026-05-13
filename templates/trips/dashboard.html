@@ -29,17 +29,17 @@
     {% if next_trip %}
     <div class="next-trip-card">
 
-    <h3>{{ next_trip.title }}</h3>
+        <h3>{{ next_trip.title }}</h3>
 
-    <div class="next-trip-destination">
-        🌍 {{ next_trip.destination }}
-    </div>
+        <div class="next-trip-destination">
+            🌍 {{ next_trip.destination }}
+        </div>
 
-    <div class="next-trip-dates">
-        📅 {{ next_trip.start_date }} → {{ next_trip.end_date }}
-    
+        <div class="next-trip-dates">
+            📅 {{ next_trip.start_date }} → {{ next_trip.end_date }}
 
-    <div class="mt-2">
+
+            <div class="mt-2">
                 {% if days_left == 0 %}
                 <span class="badge bg-warning text-dark">Today 🎉</span>
                 {% elif days_left == 1 %}
@@ -51,12 +51,11 @@
         </div>
 
 
-    <a href="{% url 'trip_detail' next_trip.id %}"
-       class="btn btn-primary">
-        View Trip
-    </a>
+        <a href="{% url 'trip_detail' next_trip.id %}" class="btn btn-primary">
+            View Trip
+        </a>
 
-</div>
+    </div>
     {% endif %}
 
 
@@ -150,9 +149,9 @@
 
     <!-- FILTER PILL -->
     {% comment %}
-Only show "Showing filtered trips" if actual filters/search applied, ignoring pagination.
-{% endcomment %}
-{% with request.GET.dict as get_params %}
+    Only show "Showing filtered trips" if actual filters/search applied, ignoring pagination.
+    {% endcomment %}
+    {% with request.GET.dict as get_params %}
     {% if get_params.q or get_params.destination or get_params.start_date %}
     <div class="filter-bar text-center mb-4">
         <div class="filter-pill d-inline-flex align-items-center gap-2">
@@ -166,7 +165,7 @@ Only show "Showing filtered trips" if actual filters/search applied, ignoring pa
         </div>
     </div>
     {% endif %}
-{% endwith %}
+    {% endwith %}
 
 
     <!-- =========================
@@ -215,13 +214,17 @@ Only show "Showing filtered trips" if actual filters/search applied, ignoring pa
 
                     <div class="trip-footer">
 
-                        
+
 
                         <div class="d-flex gap-2">
-                            <a href="{% url 'edit_trip' trip.id %}" class="trip-link">
+
+                            <a href="{% url 'edit_trip' trip.id %}"
+                                class="btn btn-outline-warning btn-sm rounded-pill px-3">
                                 Edit
                             </a>
-                            {% include "components/delete_modal.html" with object=trip delete_url=trip.get_delete_url modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete" %}
+
+                            {% include "components/delete_modal.html" with object=trip delete_url="delete_trip" modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete" %}
+
                         </div>
 
                     </div>

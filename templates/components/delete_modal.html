@@ -1,17 +1,12 @@
 <!-- DELETE BUTTON -->
-<button type="button"
-    class="btn btn-outline-danger rounded-4 px-4"
-    data-bs-toggle="modal"
+<button type="button" class="btn btn-outline-danger rounded-4 px-4" data-bs-toggle="modal"
     data-bs-target="#deleteModal{{ object.id }}">
 
     {{ button_text|default:"Delete" }}
 </button>
 
 <!-- DELETE MODAL -->
-<div class="modal fade"
-    id="deleteModal{{ object.id }}"
-    tabindex="-1"
-    aria-hidden="true">
+<div class="modal fade" id="deleteModal{{ object.id }}" tabindex="-1" aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow rounded-4 p-2">
@@ -54,19 +49,17 @@
                 <!-- ACTIONS -->
                 <div class="d-flex justify-content-center gap-3">
 
-                    <button type="button"
-                        class="btn btn-outline-secondary px-4"
-                        data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
                         Cancel
                     </button>
 
                     <form method="post" action="{% url delete_url object.id %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger px-4">
-        {{ button_text|default:"Delete" }}
-    </button>
-</form>
-                 
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger px-4">
+                            {{ button_text|default:"Delete" }}
+                        </button>
+                    </form>
+
 
                 </div>
 
