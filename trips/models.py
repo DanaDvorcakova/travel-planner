@@ -113,11 +113,8 @@ class SavedPlace(models.Model):
 
     description = models.TextField(blank=True)
 
-    image = models.ImageField(
-        upload_to='places/',
-        blank=True,
-        null=True
-    )
+    image = image = models.ImageField(upload_to='places/', blank=True, null=True)
+    
 
     rating = models.PositiveSmallIntegerField(
         null=True,
