@@ -67,15 +67,17 @@
                         {{ form.image }}
                     </div>
 
-                    <!-- PUBLISH -->
-                    <div class="col-12 mb-3 form-check">
-                        {{ form.is_published }}
-                        <label class="form-check-label ms-2">
-                            Make trip public
-                        </label>
+                    <!-- PUBLISH CHECKBOX -->
+                    <div class="col-auto mb-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="id_is_published" name="is_published"
+                                style="width: 1.25rem; height: 1.25rem; cursor: pointer;"
+                                {% if form.is_published.value %}checked{% endif %}>
+                            <label class="form-check-label ms-2 small" for="id_is_published">
+                                Make trip public
+                            </label>
+                        </div>
                     </div>
-
-                </div>
 
                 <!-- BUTTONS -->
                 <div class="d-flex justify-content-between mt-4">
