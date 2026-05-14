@@ -10,5 +10,6 @@ onReady(function () {
     initSavePlaces();
     initAddToTrip();
     initMap();
-    initAutoDismissAlerts(); // NEW
+    initAutoDismissAlerts(); 
+    initBackToTop();
 });

@@ -126,18 +126,21 @@ function initAutoDismissAlerts() {
 }
 
 // Back to Top Button
-const backToTopBtn = document.getElementById('backToTopBtn');
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (!backToTopBtn) return;
 
-window.addEventListener('scroll', () => {
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        backToTopBtn.style.display = "flex";
-        backToTopBtn.style.alignItems = "center";
-        backToTopBtn.style.justifyContent = "center";
-    } else {
-        backToTopBtn.style.display = "none";
-    }
-});
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            backToTopBtn.style.display = "flex";
+            backToTopBtn.style.alignItems = "center";
+            backToTopBtn.style.justifyContent = "center";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
 
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
