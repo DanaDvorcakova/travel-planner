@@ -77,26 +77,28 @@
                 </a>
 
                 <!-- TRIP ACTIONS -->
-<div class="d-flex gap-2">
-    <!-- Edit Trip -->
-    <a href="{% url 'edit_trip' trip.id %}" class="btn btn-outline-warning btn-sm rounded-pill px-3">Edit</a>
+                <div class="d-flex gap-2">
+                    <!-- Edit Trip -->
+                    <a href="{% url 'edit_trip' trip.id %}" class="btn btn-outline-warning btn-sm rounded-pill px-3">
+                        Edit Trip
+                    </a>
 
-    <!-- Delete Trip -->
-    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3"
-            data-bs-toggle="modal" data-bs-target="#deleteTripModal{{ trip.id }}">
-        Delete
-    </button>
+                    <!-- Delete Trip using shared modal -->
+                    {% include "components/delete_modal.html" with object=trip delete_url="delete_trip" modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete Trip" %}
+                </div>
 
-    <!-- Publish / Unpublish -->
-    <form method="post" action="{% url 'toggle_publish_trip' trip.id %}">
-        {% csrf_token %}
-        {% if trip.is_published %}
-            <button type="submit" class="btn btn-outline-secondary rounded-pill px-4">Unpublish Trip</button>
-        {% else %}
-            <button type="submit" class="btn btn-success rounded-pill px-4">Publish Trip</button>
-        {% endif %}
-    </form>
-</div>
+
+                    <!-- Publish / Unpublish -->
+                    <form method="post" action="{% url 'toggle_publish_trip' trip.id %}">
+                        {% csrf_token %}
+                        {% if trip.is_published %}
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill px-4">Unpublish
+                            Trip</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success rounded-pill px-4">Publish Trip</button>
+                        {% endif %}
+                    </form>
+                </div>
 
                 {% endif %}
 
