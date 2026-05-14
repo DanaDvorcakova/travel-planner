@@ -4,84 +4,83 @@
 
 <div class="container mt-4">
 
-    <!-- =========================
-        HEADER (COLORED)
-    ========================= -->
+    <!-- HEADER -->
     <div class="p-4 mb-4 rounded" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
         <h2 class="mb-1">Create New Trip</h2>
         <small>Plan your next adventure</small>
     </div>
 
-    <!-- =========================
-        FORM CARD
-    ========================= -->
+    <!-- FORM CARD -->
     <div class="card shadow border-0">
         <div class="card-body p-4">
 
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
-                <div class="row">
+                <div class="row g-3">
 
                     <!-- TITLE -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Trip Title</label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" for="{{ form.title.id_for_label }}">Trip Title</label>
                         {{ form.title }}
                     </div>
 
                     <!-- DESTINATION -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Destination</label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold"
+                            for="{{ form.destination.id_for_label }}">Destination</label>
                         {{ form.destination }}
                     </div>
 
                     <!-- START DATE -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Start Date</label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" for="{{ form.start_date.id_for_label }}">Start
+                            Date</label>
                         {{ form.start_date }}
                     </div>
 
                     <!-- END DATE -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">End Date</label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" for="{{ form.end_date.id_for_label }}">End Date</label>
                         {{ form.end_date }}
                     </div>
 
                     <!-- DESCRIPTION -->
-                    <div class="col-12 mb-3">
-                        <label class="form-label fw-semibold">Description</label>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold"
+                            for="{{ form.description.id_for_label }}">Description</label>
                         {{ form.description }}
                     </div>
 
                     <!-- IMAGE -->
-                    <div class="col-12 mb-3">
-                        <label class="form-label fw-semibold">Cover Image</label>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" for="{{ form.image.id_for_label }}">Cover Image</label>
                         {{ form.image }}
                     </div>
 
-                    <!-- PUBLISH -->
-                    <div class="col-12 mb-3 form-check">
-                        {{ form.is_published }}
-                        <label class="form-check-label ms-2">
-                            Make trip public
-                        </label>
+                    <!-- PUBLISH CHECKBOX -->
+                    <div class="col-auto mb-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="id_is_published" name="is_published"
+                                style="width: 1.25rem; height: 1.25rem; cursor: pointer;"
+                                {% if form.is_published.value %}checked{% endif %}>
+                            <label class="form-check-label ms-2 small" for="id_is_published">
+                                Make trip public
+                            </label>
+                        </div>
                     </div>
 
                 </div>
 
                 <!-- BUTTONS -->
                 <div class="d-flex justify-content-between mt-4">
-
-                    <a href="{% url 'dashboard' %}" 
-                       class="btn btn-outline-secondary px-4">
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary px-4">
                         Back
                     </a>
-
-                    <button class="btn px-4" 
+                    <button type="submit" class="btn px-4"
                         style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">
                         Save Trip
                     </button>
-
                 </div>
 
             </form>

@@ -1,70 +1,43 @@
-<!-- DELETE BUTTON -->
-<button type="button" class="btn btn-outline-danger rounded-4 px-4" data-bs-toggle="modal"
-    data-bs-target="#deleteModal{{ object.id }}">
+<div class="d-flex gap-2">
 
-    {{ button_text|default:"Delete" }}
-</button>
+    <!-- EDIT BUTTON -->
+    <a href="{% url 'edit_trip' trip.id %}"
+       class="btn btn-outline-warning btn-sm rounded-pill px-3">
+        Edit
+    </a>
 
-<!-- DELETE MODAL -->
-<div class="modal fade" id="deleteModal{{ object.id }}" tabindex="-1" aria-hidden="true">
+    <!-- DELETE BUTTON -->
+    <button type="button" class="btn btn-outline-danger rounded-4 px-4"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal{{ trip.id }}">
+        Delete
+    </button>
 
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow rounded-4 p-2">
-
-            <!-- HEADER -->
-            <div class="modal-header border-0 justify-content-center">
-                <h2 class="text-danger fw-semibold">
-                    {{ modal_title|default:"Delete" }}
-                </h2>
-            </div>
-
-            <!-- BODY -->
-            <div class="modal-body text-center">
-
-                <p class="fs-5 mb-4">
-                    {{ modal_message|default:"Are you sure?" }}
-                </p>
-
-                <!-- PREVIEW -->
-                <div class="bg-light rounded-4 p-4 mb-4">
-
-                    <h4 class="fw-bold mb-2">
-                        {{ object }}
-                    </h4>
-
-                    {% if subtitle %}
-                    <p class="text-muted mb-2">
-                        📍 {{ subtitle }}
-                    </p>
-                    {% endif %}
-
-                    {% if extra_info %}
-                    <p class="text-muted mb-0">
-                        📅 {{ extra_info }}
-                    </p>
-                    {% endif %}
-
+    <!-- DELETE MODAL -->
+    <div class="modal fade" id="deleteModal{{ trip.id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4 p-2">
+                <div class="modal-header border-0 justify-content-center">
+                    <h2 class="text-danger fw-semibold">Delete Trip</h2>
                 </div>
-
-                <!-- ACTIONS -->
-                <div class="d-flex justify-content-center gap-3">
-
-                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                        Cancel
-                    </button>
-
-                    <form method="post" action="{% url delete_url object.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger px-4">
-                            {{ button_text|default:"Delete" }}
+                <div class="modal-body text-center">
+                    <p class="fs-5 mb-4">Are you sure you want to delete this trip?</p>
+                    <div class="bg-light rounded-4 p-4 mb-4">
+                        <h4 class="fw-bold mb-2">{{ trip.title }}</h4>
+                        <p class="text-muted mb-2">📍 {{ trip.destination }}</p>
+                        <p class="text-muted mb-0">📅 {{ trip.start_date }} → {{ trip.end_date }}</p>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                            Cancel
                         </button>
-                    </form>
-
-
+                        <form method="post" action="{% url 'delete_trip' trip.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger px-4">Delete</button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 
