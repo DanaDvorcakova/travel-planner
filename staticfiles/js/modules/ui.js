@@ -124,3 +124,23 @@ function initAutoDismissAlerts() {
         }, 3000);
     });
 }
+
+// Back to Top Button
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            backToTopBtn.style.display = "flex";
+            backToTopBtn.style.alignItems = "center";
+            backToTopBtn.style.justifyContent = "center";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}

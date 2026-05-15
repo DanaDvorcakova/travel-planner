@@ -14,8 +14,8 @@ import cloudinary.api
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
-SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = config("DEBUG", default=True, cast=bool)  # ensures True locally
+SECRET_KEY = config("SECRET_KEY", default="dev-secret-key")
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -117,6 +117,9 @@ if IS_RENDER:
         },
     }
 
+    IS_RENDER = os.getenv("RENDER", "False") == "True"
+
+if IS_RENDER:
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
         'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
