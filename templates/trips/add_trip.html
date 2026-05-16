@@ -32,19 +32,29 @@
                         {{ form.destination }}
                     </div>
 
-                    <!-- START DATE -->
+                   <!-- START DATE -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold" for="{{ form.start_date.id_for_label }}">Start
-                            Date</label>
+                        <label class="form-label fw-semibold" for="{{ form.start_date.id_for_label }}">Start Date</label>
                         {{ form.start_date }}
+                        {% if form.start_date.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.start_date.errors|first }}
+                        </div>
+                        {% endif %}
                     </div>
 
                     <!-- END DATE -->
                     <div class="col-md-6">
                         <label class="form-label fw-semibold" for="{{ form.end_date.id_for_label }}">End Date</label>
                         {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.end_date.errors|first }}
+                        </div>
+                        {% endif %}
                     </div>
 
+                
                     <!-- DESCRIPTION -->
                     <div class="col-12">
                         <label class="form-label fw-semibold"

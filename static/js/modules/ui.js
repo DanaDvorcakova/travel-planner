@@ -107,7 +107,7 @@ window.scrollDestinations = function (direction) {
 };
 
 // =========================
-// AUTO DISMISS ALERTS (Django messages)
+// AUTO DISMISS ALERTS 
 // =========================
 function initAutoDismissAlerts() {
     const alerts = document.querySelectorAll('.alert');
@@ -125,7 +125,9 @@ function initAutoDismissAlerts() {
     });
 }
 
-// Back to Top Button
+// =========================
+// BACK TO TOP BUTTON
+// =========================
 function initBackToTop() {
     const backToTopBtn = document.getElementById('backToTopBtn');
     if (!backToTopBtn) return;
