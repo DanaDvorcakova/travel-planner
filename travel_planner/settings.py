@@ -95,8 +95,8 @@ USE_TZ = True
 
 # STATIC FILES
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles" # production collectstatic
+STATICFILES_DIRS = [BASE_DIR / "static"] # development
 
 # STATICFILES STORAGE
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
