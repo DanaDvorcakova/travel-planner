@@ -23,6 +23,68 @@ section {
 }
 
 /* =========================
+   AUTH PAGE
+========================= */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* vertically center */
+    padding: 40px 20px;
+    background-color: #f9fafb;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px; /* constrain the form width */
+    margin: 0 auto;
+}
+
+.auth-card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.auth-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.auth-subtitle {
+    font-size: 0.95rem;
+}
+
+/* Form inputs */
+.auth-card input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* Buttons */
+.auth-card .btn {
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+}
+
+/* Links */
+.auth-link {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
    LAYOUT
 ========================= */
 

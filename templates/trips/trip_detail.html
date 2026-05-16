@@ -63,67 +63,62 @@
         <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
 
             <!-- LEFT: Owner actions ONLY -->
-            <div class="d-flex flex-wrap gap-2">
+            <div class="card-body d-flex align-items-center flex-wrap gap-2 action-buttons">
 
-                {% if user.is_authenticated and trip.user == user %}
+    {% if user.is_authenticated and trip.user == user %}
 
+        <a href="{% url 'planner' trip.id %}" 
+           class="btn btn-outline-primary rounded-pill px-4">
+            📅 Itinerary Planner
+        </a>
 
-                <a href="{% url 'planner' trip.id %}" class="btn btn-outline-primary rounded-pill px-4">
-                    📅 Itinerary Planner
-                </a>
+        <a href="{% url 'add_item' trip.id %}" 
+           class="btn btn-primary rounded-pill px-4">
+            + Add to Itinerary
+        </a>
 
-                <a href="{% url 'add_item' trip.id %}" class="btn btn-primary rounded-pill px-4">
-                    + Add to Itinerary
-                </a>
+        <a href="{% url 'edit_trip' trip.id %}" 
+           class="btn btn-outline-warning rounded-pill px-4">
+            Edit Trip
+        </a>
 
-                <!-- TRIP ACTIONS -->
-                <div class="d-flex gap-2">
-                    <!-- Edit Trip -->
-                    <a href="{% url 'edit_trip' trip.id %}" 
-                    class="btn btn-outline-warning rounded-pill px-4 d-flex align-items-center justify-content-center">
-                        Edit Trip
-                    </a>
-                </div>
+        <!-- Delete Trip -->
+        <button type="button"
+                class="btn btn-outline-danger rounded-pill px-4"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteTripModal{{ trip.id }}">
+            Delete Trip
+        </button>
 
-                    <!-- Delete Trip Button (Trigger) -->
-                <!-- Delete Trip Button -->
-                <button type="button" 
-                        class="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center justify-content-center fs-6"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteTripModal{{ trip.id }}">
-                    Delete Trip
+        {% include "components/delete_modal.html" with object=trip delete_url="delete_trip" modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete Trip" %}
+
+        <!-- Publish / Unpublish -->
+        <form method="post" action="{% url 'toggle_publish_trip' trip.id %}">
+            {% csrf_token %}
+            {% if trip.is_published %}
+                <button type="submit" class="btn btn-outline-secondary rounded-pill px-4">
+                    Unpublish Trip
                 </button>
+            {% else %}
+                <button type="submit" class="btn btn-success rounded-pill px-4">
+                    Publish Trip
+                </button>
+            {% endif %}
+        </form>
 
-                    <!-- Delete Trip using shared modal -->
-                    {% include "components/delete_modal.html" with object=trip delete_url="delete_trip" modal_title="Delete Trip" modal_message="Are you sure you want to delete this trip?" subtitle=trip.destination extra=trip.start_date|add:" → "|add:trip.end_date button_text="Delete Trip" %}
-                
+    {% endif %}
 
+    <!-- RIGHT BUTTON -->
+    {% if trip.is_published %}
+    <a href="#reviews"
+       class="btn btn-outline-primary rounded-pill px-4 ms-auto">
+        ⭐ Jump to Reviews
+    </a>
+    {% endif %}
 
-                    <!-- Publish / Unpublish -->
-                    <form method="post" action="{% url 'toggle_publish_trip' trip.id %}">
-                        {% csrf_token %}
-                        {% if trip.is_published %}
-                        <button type="submit" class="btn btn-outline-secondary rounded-pill px-4">Unpublish
-                            Trip</button>
-                        {% else %}
-                        <button type="submit" class="btn btn-success rounded-pill px-4">Publish Trip</button>
-                        {% endif %}
-                    </form>
-                </div>
-
-                {% endif %}
-
-            
-
-            <!-- RIGHT: PUBLIC BUTTON -->
-            <div class="d-flex">
-                <a href="#reviews" class="btn btn-outline-primary rounded-pill px-4">
-                    ⭐ Jump to Reviews
-                </a>
-            </div>
-
-        </div>
-    </div>
+</div>
+    </div> 
+    </div> 
 
     <!-- =========================
          DESCRIPTION
