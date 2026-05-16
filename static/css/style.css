@@ -152,12 +152,13 @@ footer {
     position: relative;
     min-height: 55vh;
     background: url("/static/images/hero.jpg") center/cover no-repeat;
+    filter: brightness(1.1);
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.25);
+    background: rgba(0,0,0,0.1);
 }
 
 .hero-content {
@@ -229,7 +230,6 @@ footer {
     background: #5a6fd8;
 }
 
-/* Dashboard Search */
 
 .dashboard-search {
     margin-top: 10px;
@@ -283,8 +283,6 @@ footer {
     height: 32px;
     background: #e5e7eb;
 }
-
-
 
 /* =========================
    NEXT TRIP CARD
@@ -649,7 +647,7 @@ footer {
 
 
 /* ==========================
-   Ratings Dropdown Style (Reviews only)
+   RATINGS DROPDOWN
 ========================== */
 #reviews select.form-select {
   color: black; 
@@ -832,6 +830,7 @@ footer {
 .btn-primary:hover {
     background: #5a6fd8;
 }
+
 
 /* =========================
    FEATURES
@@ -1097,8 +1096,7 @@ footer {
         width: 100%;
     }
 
-
-     /* back to top button */
+    /* back to top button */
 #backToTopBtn {
     position: fixed;
     bottom: 30px;
@@ -1141,10 +1139,14 @@ footer {
     }
 }
 
+
 /* =========================
    RESPONSIVE
 ========================= */
 
+/* -------------------------
+   Tablet & below
+------------------------- */
 @media (max-width: 992px) {
 
     .main-content {
@@ -1180,8 +1182,12 @@ footer {
     }
 }
 
+/* -------------------------
+   Mobile & small tablets
+------------------------- */
 @media (max-width: 768px) {
 
+    /* GENERAL PAGE STYLING */
     body {
         font-size: 14px;
     }
@@ -1207,33 +1213,139 @@ footer {
         transform: translateX(0);
     }
 
+    .container,
+    .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .main-content {
-        padding: 80px 15px 20px;
-        border-radius: 0;
+        padding: 78px 12px 20px;
+    }
+
+    /* =========================
+       HERO SECTION
+    ========================== */
+    .hero-section {
+        min-height: 70vh;
+        background-position: center;
+        background-size: cover;
+        padding: 40px 15px;
+    }
+
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-content {
+        padding: 0 10px;
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.2;
     }
 
     .hero-subtitle {
         font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 16px;
     }
 
-    .hero-search .search-box,
-    .dashboard-search-box,
-    .search-bar-wrapper {
+    .hero-search .search-box {
         flex-direction: column;
-        border-radius: 20px;
-        width: 100%;
+        border-radius: 16px;
+        overflow: hidden;
     }
 
-    .hero-search .search-btn,
-    .search-btn {
+    .hero-search .search-input {
         width: 100%;
-        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
     }
 
+    .hero-search .search-btn {
+        width: 100%;
+        height: 42px;
+        border-radius: 0;
+    }
+
+    .hero-content .btn {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        display: block;
+        font-size: 0.95rem;
+    }
+
+    /* =========================
+       ACTION BUTTONS
+    ========================== */
+    .card-body .btn {
+        padding: 0.45rem 1rem !important;
+        font-size: 0.9rem;
+        border-radius: 999px;
+    }
+
+    .card-body form {
+        margin: 0;
+    }
+
+    .card-body.d-flex {
+        gap: 10px !important;
+        justify-content: center;
+    }
+
+    .card-body .ms-auto {
+        margin-left: 0 !important;
+    }
+
+    .card-body a[href="#reviews"] {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .action-buttons .btn,
+    .action-buttons form .btn {
+        padding: 0.42rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        justify-content: flex-start;
+    }
+
+    .action-buttons a[href="#reviews"] {
+        margin-left: auto;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .btn-lg {
+        padding: 0.7rem 1.2rem;
+    }
+
+    .rounded-pill {
+        border-radius: 999px !important;
+    }
+
+    /* =========================
+       FEATURES
+    ========================== */
+    .features-section .row {
+        row-gap: 20px;
+    }
+
+    .feature-card {
+        margin-bottom: 4px;
+    }
+
+    /* =========================
+       DESTINATIONS & TRIPS
+    ========================== */
     .destination-card {
         min-width: 220px;
         height: 220px;
@@ -1243,6 +1355,14 @@ footer {
         height: 180px;
     }
 
+    .trip-hero-image img {
+        height: 260px;
+        object-fit: cover;
+    }
+
+    /* =========================
+       PROFILE
+    ========================== */
     .profile-card {
         padding: 24px;
     }
@@ -1253,28 +1373,30 @@ footer {
     }
 
     .form-grid {
-    grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
 
     .stat-number {
         font-size: 2rem;
     }
 
-    
+    /* =========================
+       LAYOUTS / GRID FIXES
+    ========================== */
     .row.mb-5 {
         display: flex;
         flex-direction: column;
-        gap: 30px; 
+        gap: 30px;
     }
 
     .col-md-6 .section-heading.mb-3 {
-        margin-top: 30px; 
-        margin-bottom: 12px; 
+        margin-top: 30px;
+        margin-bottom: 12px;
         text-align: center;
     }
 
     .trip-overview-card {
-        margin-top: 0; 
+        margin-top: 0;
     }
 
     .weather-card {
@@ -1283,39 +1405,221 @@ footer {
     }
 
     .trip-overview-hero {
-        width: 95%;
-        height: 100px; 
+        width: 140px;
+        height: 90px;
         margin: 0 auto 12px;
+        border-radius: 10px;
     }
 
+    .trip-overview-hero img {
+        object-fit: cover;
+    }
 
     .section-heading.mb-3 {
         text-align: center;
         margin-bottom: 12px;
     }
-    
 
     #map {
         height: 350px;
     }
 
-
+    /* =========================
+       REVIEWS
+    ========================== */
     .review-avatar,
     .review-avatar-placeholder {
         width: 40px;
         height: 40px;
         font-size: 16px;
     }
-    
+
     .review-item .d-flex.align-items-center.gap-3 {
         gap: 10px;
     }
+
+    #reviews .card {
+        padding: 1rem !important;
+    }
+
+    .review-actions {
+        opacity: 1;
+    }
+
+    .review-action-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+    footer {
+        text-align: center;
+    }
+
+    .footer-brand-col {
+        margin-bottom: 10px;
+    }
+
+    .footer-links-col,
+    .footer-destinations-col {
+        text-align: center;
+    }
+
+    .footer-connect-col {
+        margin-top: 10px;
+    }
+
+    .footer-socials {
+        justify-content: center;
+    }
+
+    footer .input-group {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+       SAVED PLACES
+    ========================== */
+    .saved-places-header,
+    .text-center.mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .text-center.mb-4 h2 {
+        font-size: 1.9rem;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .text-center.mb-4 p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem !important;
+    }
+
+    .auto-hide-text {
+        font-size: 0.82rem;
+        padding: 0.75rem 1rem;
+        border-radius: 14px;
+    }
+
+    h2.fw-bold {
+        font-size: 1.9rem;
+        margin-bottom: 6px;
+    }
+
+    .text-muted {
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+
+    .d-flex.justify-content-center.gap-2.flex-wrap {
+        gap: 10px !important;
+        margin-bottom: 18px !important;
+    }
+
+    .d-flex.justify-content-center.gap-2.flex-wrap .btn {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        width: 85%;
+        max-width: 280px;
+    }
+
+    .search-page-header {
+        margin-top: 0 !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .search-box {
+        border-radius: 18px;
+        overflow: hidden;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+        padding: 12px 14px;
+    }
+
+    .search-btn {
+        width: 52px;
+    }
+
+    .search-page-header .btn-sm {
+        font-size: 0.8rem;
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+    }
+
+    .place-card {
+        padding: 14px;
+    }
+
+    .place-title {
+        font-size: 1rem;
+    }
+
+    /* =========================
+       DELETE MODAL
+    ========================== */
+    .modal-dialog {
+        max-width: 88vw !important;
+        margin: 0.75rem auto !important;
+    }
+
+    .modal-content {
+        border-radius: 14px;
+        padding: 6px !important;
+    }
+
+    .modal-header {
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    .modal-header h2 {
+        font-size: 1.05rem !important;
+    }
+
+    .modal-body {
+        padding: 0.75rem !important;
+    }
+
+    .modal-body .fs-5 {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .modal-body .bg-light {
+        padding: 10px !important;
+        border-radius: 12px;
+        font-size: 0.85rem;
+    }
+
+    .modal-body .bg-light h4 {
+        font-size: 0.95rem;
+    }
+
+    .modal-body .d-flex {
+        flex-direction: column !important;
+        gap: 8px;
+    }
+
+    .modal-body .btn,
+    .modal-body form {
+        width: 100%;
+    }
+
+    .modal-body .btn {
+        font-size: 0.85rem;
+        padding: 0.42rem 0.9rem;
+    }
 }
 
-
-
+/* -------------------------
+   Extra small devices
+------------------------- */
 @media (max-width: 480px) {
-
     .hero-title {
         font-size: 1.6rem;
     }
@@ -1329,12 +1633,14 @@ footer {
     }
 }
 
+/* -------------------------
+   Desktop adjustments
+------------------------- */
 @media (min-width: 769px) {
     .menu-toggle {
         display: none !important;
     }
 }
-
 
 
 
