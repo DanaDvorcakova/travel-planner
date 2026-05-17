@@ -12,9 +12,9 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="text-decoration-none">🏠 Dashboard</a>
+                    <a href="{% url 'dashboard' %}" class="text-decoration-none"> Dashboard</a>
                     {% else %}
-                    <a href="{% url 'home' %}" class="text-decoration-none">🏠 Home</a>
+                    <a href="{% url 'home' %}" class="text-decoration-none"> Home</a>
                     {% endif %}
                 </li>
 
@@ -69,7 +69,7 @@
 
         <a href="{% url 'planner' trip.id %}" 
            class="btn btn-outline-primary rounded-pill px-4">
-            📅 Itinerary Planner
+             Itinerary Planner
         </a>
 
         <a href="{% url 'add_item' trip.id %}" 
@@ -112,7 +112,7 @@
     {% if trip.is_published %}
     <a href="#reviews"
        class="btn btn-outline-primary rounded-pill px-4 ms-auto">
-        ⭐ Jump to Reviews
+         Jump to Reviews
     </a>
     {% endif %}
   </div>
