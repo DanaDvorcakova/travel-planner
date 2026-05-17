@@ -183,10 +183,17 @@ External APIs are integrated dynamically to provide real-time travel data.
 
 
 
+Project Documentation
 Buddy Travel Planner
 
-A full-stack travel planning web application built with Django that allows users to create personalized travel itineraries, save destinations, explore public trip inspirations, view interactive maps, check live weather forecasts, and review trips shared by the community.
+Author: Dana Dvorcakova
+Date:   30/05/2026
+Link:   https://travel-planner-sege.onrender.com
+        https://github.com/DanaDvorcakova/travel-planner
+Database:  travel_planner_db
 
+Overview
+A full-stack travel planning web application built with Django that allows users to create personalized travel itineraries, save destinations, explore public trip inspirations, view interactive maps, check live weather forecasts, and review trips shared by the community.
 The platform combines trip management, location services, mapping technologies, and social travel inspiration into a single responsive web application.
 
 

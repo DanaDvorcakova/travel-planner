@@ -687,7 +687,7 @@ def trip_detail(request, id):
             raise Http404()
 
     # =========================
-    # 🌍 WEATHER
+    # WEATHER
     # =========================
     weather = None
     forecast = []
@@ -720,7 +720,7 @@ def trip_detail(request, id):
             print("Map error:", e)
 
     # =========================
-    # 🌎 COUNTRY INFO
+    # COUNTRY INFO
     # =========================
     country_info = None
 
@@ -748,7 +748,7 @@ def trip_detail(request, id):
             print("Country API error:", e)
 
     # =========================
-    # 📍 MAP PINS
+    # MAP PINS
     # =========================
     places = []
 
@@ -774,7 +774,7 @@ def trip_detail(request, id):
             })
 
     # =========================
-    # ⭐ REVIEWS
+    #  REVIEWS
     # =========================
     reviews = trip.reviews.select_related('user').all()
     avg_rating = trip.average_rating or 0  # make sure it's not None
@@ -790,7 +790,7 @@ def trip_detail(request, id):
         review.empty_stars_range = range(5 - int(review.rating))
 
     # =========================
-    # 🎨 TEMPLATE CONTEXT
+    # TEMPLATE CONTEXT
     # =========================
     return render(request, 'trips/trip_detail.html', {
         'trip': trip,
@@ -810,7 +810,7 @@ def trip_detail(request, id):
     })
 
 # =========================
-# 📝 ADD REVIEW
+# ADD REVIEW
 # =========================
 @login_required
 def add_review(request, id):  
@@ -840,7 +840,7 @@ def add_review(request, id):
     })
    
 # =========================
-# ✏️ EDIT REVIEW
+# EDIT REVIEW
 # =========================
 @login_required
 def edit_review(request, id):
@@ -871,7 +871,7 @@ def edit_review(request, id):
     })
 
 # =========================
-# 🗑 DELETE REVIEW
+#  DELETE REVIEW
 # =========================
 @login_required
 @require_POST

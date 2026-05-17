@@ -1,5 +1,5 @@
 import requests
-
+from .maps import get_coordinates 
 
 def get_country_info(destination):
     if not destination:
