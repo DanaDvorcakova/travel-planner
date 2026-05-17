@@ -890,3 +890,8 @@ def delete_review(request, id):
 
     messages.success(request, "Review deleted.")
     return redirect('trip_detail', id=trip_id)
+
+
+
+
+

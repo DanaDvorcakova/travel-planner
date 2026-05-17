@@ -659,10 +659,14 @@ Mobile Features
 •   Mobile navigation
 •   Adaptive layouts
 
+
 16. Testing 
 
+Functional and Manual Testing
 The application was tested throughout development to ensure all major functionality worked correctly.
+
 Testing included:
+
 •	Authentication testing 
 •	CRUD functionality testing 
 •	API integration testing 
@@ -671,6 +675,7 @@ Testing included:
 •	JavaScript interaction testing 
 
 Authentication Testing
+
 Feature	      Expected Result	                  Result
 User registration	New account created	            Pass
 Login	            User redirected to dashboard	      Pass
@@ -678,26 +683,32 @@ Logout	      Session ended successfully	      Pass
 Protected routes	Redirect unauthenticated users	Pass
 
 CRUD Testing
+
 Feature	      Create	Read	      Update	Delete
-Trips	            Pass	      Pass	      Pass	      Pass
+Trips		      Pass	      Pass	      Pass        Pass
 Itinerary Items	Pass	      Pass	      Pass	      Pass
 Saved Places	Pass	      Pass	      Pass	      Pass
 Reviews	      Pass	      Pass	      Pass	      Pass
 
 API Testing
-API	                  Purpose	                  Result
-OpenWeather API	      Weather forecasts	            Pass
-OpenCage API	      Geolocation coordinates	      Pass
-REST Countries API	Country information	      Pass
+
+API	                  Purpose	            Result
+OpenWeather API	      Weather forecasts	      Pass
+OpenCage API	      Geolocation coordinates	Pass
+REST Countries API	Country information	Pass
+
 
 Responsive Testing
+
 The application was tested on:
 •	Mobile devices 
 •	Tablets 
 •	Desktop screens 
+
 Bootstrap 5 responsive utilities were used to ensure layouts adapted correctly across screen sizes.
 
 Security Testing
+
 The following security features were tested:
 •	CSRF protection 
 •	Login required decorators 
@@ -705,6 +716,7 @@ The following security features were tested:
 •	Private trip access restrictions 
 
 Testing Summary
+
 Testing confirmed that:
 •	Core application features function correctly 
 •	APIs integrate successfully 
@@ -713,37 +725,61 @@ Testing confirmed that:
 
 
 Automated Unit Testing
-The project includes automated unit tests implemented using Django’s built-in TestCase framework.
+The project includes automated unit and integration tests implemented using Django’s built-in TestCase framework. The test suite was designed to verify core application functionality, user permissions, validation handling, and external service integration.
+
 The tests verify:
 •	Authentication functionality 
 •	CRUD operations 
 •	Permissions and access control 
 •	AJAX requests 
 •	Form validation 
-•	Messages framework 
+•	Django messages framework 
 •	External API handling 
 •	Trip detail rendering 
+•	Edge cases and error handling 
 
-Mocking was used for external APIs to prevent unnecessary live API requests during testing.
+Mocking was used for external APIs (weather, maps, and country information services) to prevent unnecessary live API requests during testing and to ensure reliable, isolated test execution.
 
 Technologies Used for Testing
 •	Django TestCase 
 •	Django Client 
 •	unittest.mock 
 •	Reverse URL testing 
+•	Coverage.py 
 
 Example Test Areas
-Test Category	Description
-Authentication Tests	Login, logout, signup, protected routes
-Trip Tests	Create, edit, delete, view trips
-Itinerary Tests	Add/edit/delete itinerary items
-AJAX Tests	Save place and add-to-trip functionality
-Permission Tests	Prevent unauthorized access
-API Tests	Weather and map API handling
-Message Tests	Django success/error messages
-Validation Tests	Invalid form submissions
 
-Testing Command: python manage.py test
+Test Category	      Description
+Authentication Tests	Login, logout, signup, protected routes
+Trip Tests	            Create, edit, delete, and view trips
+Itinerary Tests	      Add, edit, and delete itinerary items
+AJAX Tests	            Save place and add-to-trip functionality
+Permission Tests	      Prevent unauthorized access
+API Tests	            Weather and map API handling
+Profile Tests	      User profile updates and validation
+Validation Tests        Invalid form submissions and edge cases
+
+Test Coverage
+Code coverage analysis was performed using the coverage package to measure how much of the application is exercised by automated tests.
+
+Coverage Summary
+File	                        Coverage
+trips/views.py	            75%
+trips/forms.py	            97%
+trips/models.py	            90%
+travel_planner/settings.py	91%
+manage.py	                  82%
+Total Project Coverage	      82%
+
+The final automated test suite achieved:
+•	82% overall code coverage 
+•	75% coverage of views.py 
+•	100% coverage of tests.py 
+
+Testing was performed using:
+python manage.py test
+coverage run manage.py test
+coverage report
 
 
 17. Challenges Faced    
